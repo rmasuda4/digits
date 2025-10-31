@@ -6,32 +6,32 @@ import { PeopleFill, FileEarmarkTextFill, Calendar2CheckFill } from 'react-boots
 export default function HomePage() {
   return (
     <main>
-      <Container className="text-center py-5">
-        <Row>
-          <Col>
-            <PeopleFill size={100} />
-            <h1>Users and Contacts</h1>
-            <h5>
+      <Container className="text-center mt-5">
+        <Row className="justify-content-center align-items-start">
+          <Col md={3}>
+            <PeopleFill size={60} />
+            <h3 className="mt-3">Users and Contacts</h3>
+            <p>
               This address book enables any number of users to register and save their business contacts.
               You can only see the contacts you have created.
-            </h5>
+            </p>
           </Col>
 
-          <Col>
-            <FileEarmarkTextFill size={100} />
-            <h1>Contact Information</h1>
-            <h5>
+          <Col md={3}>
+            <FileEarmarkTextFill size={60} />
+            <h3 className="mt-3">Contact Information</h3>
+            <p>
               For each contact, you can save their name, address, and phone number.
-            </h5>
+            </p>
           </Col>
 
-          <Col>
-            <Calendar2CheckFill size={100} />
-            <h1>Notes and History</h1>
-            <h5>
+          <Col md={3}>
+            <Calendar2CheckFill size={60} />
+            <h3 className="mt-3">Notes and History</h3>
+            <p>
               Each time you make contact with a contact, you can write a note that summarizes
               the conversation. This note is saved along with a timestamp with the contact.
-            </h5>
+            </p>
           </Col>
         </Row>
       </Container>
