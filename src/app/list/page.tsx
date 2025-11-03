@@ -6,7 +6,10 @@ import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import { Contact } from '@/lib/validationSchemas';
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import ContactCard from '@/components/ContactCard';
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -63,11 +66,15 @@ const ListPage = async () => {
             <h2>List Contacts</h2>
             <Row xs={1} md={2} lg={3} className="g-4">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {contacts.map((contact) => (
                 <Col key={`Contact-${contact.firstName}`}>
                   <ContactCard {...contact} />
                 </Col>
               ))}
+=======
+              {/* We will render contacts here */}
+>>>>>>> Stashed changes
 =======
               {/* We will render contacts here */}
 >>>>>>> Stashed changes
