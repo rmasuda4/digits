@@ -5,7 +5,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import { Contact } from '@/lib/validationSchemas';
+<<<<<<< Updated upstream
 import ContactCard from '@/components/ContactCard';
+=======
+>>>>>>> Stashed changes
 
 /** Render a list of stuff for the logged in user. */
 const ListPage = async () => {
@@ -59,11 +62,15 @@ const ListPage = async () => {
           <Col>
             <h2>List Contacts</h2>
             <Row xs={1} md={2} lg={3} className="g-4">
+<<<<<<< Updated upstream
               {contacts.map((contact) => (
                 <Col key={`Contact-${contact.firstName}`}>
                   <ContactCard {...contact} />
                 </Col>
               ))}
+=======
+              {/* We will render contacts here */}
+>>>>>>> Stashed changes
             </Row>
           </Col>
         </Row>
