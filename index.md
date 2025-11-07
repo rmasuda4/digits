@@ -23,7 +23,6 @@ You can download them here:
 Once PostgreSQL is installed, make sure the PostgreSQL service is running.  
 You can verify it by opening a terminal and running:
 
-```bash
 psql --version
 
 ---
@@ -36,7 +35,10 @@ bash
 Copy code
 git clone https://github.com/rmasuda4/digits.git
 cd digits
-3. Create a PostgreSQL database
+
+---
+
+### 3. Create a PostgreSQL database
 Before setting up Prisma, create the database that this app will use:
 
 bash
@@ -44,7 +46,7 @@ Copy code
 createdb digits
 This creates an empty PostgreSQL database named digits that Prisma will connect to.
 
-4. Configure environment variables
+### 4. Configure environment variables
 Copy the sample environment file to create your local .env file:
 
 bash
@@ -59,7 +61,7 @@ Copy code
 DATABASE_URL="postgresql://postgres:yourpassword@localhost:5432/digits"
 If you’re using a different PostgreSQL username, password, or port, adjust it here.
 
-5. Install dependencies
+### 5. Install dependencies
 Install all required Node.js packages using npm:
 
 bash
@@ -67,7 +69,7 @@ Copy code
 npm install
 This will download everything needed for Next.js, Prisma, and authentication.
 
-6. Run the database migrations
+### 6. Run the database migrations
 Next, tell Prisma to set up the database tables:
 
 bash
@@ -75,7 +77,7 @@ Copy code
 npx prisma migrate dev
 This creates the database schema defined in prisma/schema.prisma.
 
-7. Seed the database
+### 7. Seed the database
 Now add the default users and contacts from config/settings.development.json:
 
 bash
@@ -89,7 +91,7 @@ john@foo.com (role: USER, password: changeme)
 
 Default sample contacts for both users.
 
-8. Start the application
+### 8. Start the application
 Once the database is ready, start the development server:
 
 bash
