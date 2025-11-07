@@ -1,52 +1,61 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import { readFileSync } from 'fs';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 const settings = JSON.parse(readFileSync('config/settings.development.json', 'utf-8'));
 
-async function main() {
-  console.log('Seeding the database');
+console.log('Seeding the database...');
 
-  // --- Users ---
-  for (const user of settings.defaultAccounts) {
-    const { email, password, role } = user;
+// --- Users ---
+settings.defaultAccounts.forEach((user: { email: string; password: string; role: string }) => {
+  const { email, password, role } = user;
+  const roleEnum = role === 'ADMIN' ? Role.ADMIN : Role.USER;
+
+  bcrypt.hash(password, 10).then((hashedPassword) => {
     prisma.user.upsert({
       where: { email },
       update: {},
-      create: { email, password, role },
+      create: { email, password: hashedPassword, role: roleEnum },
+    }).then(() => {
+      console.log(`  Created user: ${email} with role: ${roleEnum}`);
     });
-    console.log(`  Created user: ${email} with role: ${role || 'USER'}`);
-  }
-
-  // --- Stuff ---
-  for (const item of settings.defaultData) {
-    prisma.stuff.upsert({
-      where: { id: item.id ?? 0 },
-      update: {},
-      create: item,
-    });
-    console.log(`  Added stuff: ${item.name} (${item.owner})`);
-  }
-
-  // --- Contacts ---
-  // Clear existing contacts first (optional, only for development)
-  await prisma.contact.deleteMany({});
-
-  for (const contact of settings.defaultContacts) {
-    prisma.contact.create({
-      data: contact,
-    });
-    console.log(`  Added contact: ${contact.firstName} ${contact.lastName}`);
-  }
-}
-
-main()
-  .then(async () => {
-    console.log('\n🌱  The seed command has been executed.');
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
   });
+});
+
+// --- Stuff ---
+settings.defaultData.forEach((item: any) => {
+  prisma.stuff.upsert({
+    where: { id: item.id ?? 0 },
+    update: {},
+    create: item,
+  }).then(() => {
+    console.log(`  Added stuff: ${item.name} (${item.owner})`);
+  });
+});
+
+// --- Contacts ---
+prisma.contact.deleteMany().then(() => {
+  settings.defaultContacts.forEach((contact: any) => {
+    prisma.contact.create({ data: contact }).then((createdContact) => {
+      console.log(`  Added contact: ${createdContact.firstName} ${createdContact.lastName}`);
+
+      // --- Optional placeholder note ---
+      prisma.note.create({
+        data: {
+          contactId: createdContact.id,
+          note: 'This is a sample note for testing.',
+          owner: 'admin@foo.com',
+        },
+      }).then(() => {
+        console.log(`    Added test note for ${createdContact.firstName}`);
+      });
+    });
+  });
+});
+
+// Disconnect after all promises finish
+setTimeout(() => {
+  prisma.$disconnect();
+  console.log('\n🌱 Database seeding complete.');
+}, 5000); // give time for all promises to resolve
