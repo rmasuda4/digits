@@ -25,8 +25,6 @@ You can verify it by opening a terminal and running:
 
 psql --version
 
----
-
 ### 2. Clone this repository
 You can use GitHub Desktop or the terminal.
 Using the terminal:
@@ -35,8 +33,6 @@ bash
 Copy code
 git clone https://github.com/rmasuda4/digits.git
 cd digits
-
----
 
 ### 3. Create a PostgreSQL database
 Before setting up Prisma, create the database that this app will use:
